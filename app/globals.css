@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&display=swap');
 
 @layer base {
   :root {
@@ -30,24 +31,24 @@
   }
 
   .dark {
-    --background: 0 0% 4%; /* Darker background */
+    --background: 0 0% 3%; /* Even darker for better contrast */
     --foreground: 0 0% 98%;
-    --card: 0 0% 8%; /* Slightly lighter cards */
+    --card: 0 0% 6%; /* Darker cards for depth */
     --card-foreground: 0 0% 98%;
     --popover: 0 0% 8%;
     --popover-foreground: 0 0% 98%;
     --primary: 142 76% 36%; /* Spotify green */
     --primary-foreground: 0 0% 98%;
-    --secondary: 0 0% 10%;
+    --secondary: 0 0% 8%;
     --secondary-foreground: 0 0% 98%;
-    --muted: 0 0% 10%;
+    --muted: 0 0% 8%;
     --muted-foreground: 0 0% 65%;
-    --accent: 0 0% 10%;
+    --accent: 0 0% 8%;
     --accent-foreground: 0 0% 98%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 15%;
-    --input: 0 0% 10%;
+    --border: 0 0% 12%;
+    --input: 0 0% 8%;
     --ring: 142 76% 36%;
   }
 }
@@ -64,161 +65,287 @@
     @apply bg-background text-foreground;
     font-family: 'Inter', sans-serif;
     overflow-x: hidden;
+    background: linear-gradient(135deg, rgb(0, 0, 0) 0%, rgb(15, 15, 15) 25%, rgb(0, 0, 0) 50%, rgb(10, 10, 10) 75%, rgb(0, 0, 0) 100%);
+    background-attachment: fixed;
+  }
+  
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 4px;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: rgba(34, 197, 94, 0.3);
+    border-radius: 4px;
+    transition: background 0.3s ease;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(34, 197, 94, 0.5);
   }
 }
 
 @layer components {
-  /* Modern card components */
+  /* Enhanced modern card components */
   .glass-card {
-    @apply bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl;
+    @apply bg-white/3 backdrop-blur-2xl border border-white/8 rounded-3xl;
+    background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
     box-shadow: 
-      0 4px 6px -1px rgba(0, 0, 0, 0.1),
-      0 2px 4px -1px rgba(0, 0, 0, 0.06),
-      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+      0 8px 32px rgba(0, 0, 0, 0.3),
+      0 2px 8px rgba(0, 0, 0, 0.15),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1),
+      inset 0 -1px 0 rgba(255, 255, 255, 0.05);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .glass-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+    transition: left 0.8s ease;
   }
 
   .glass-card:hover {
-    @apply bg-white/10 border-white/20;
+    @apply bg-white/8 border-white/15;
+    transform: translateY(-2px);
     box-shadow: 
-      0 10px 15px -3px rgba(0, 0, 0, 0.1),
-      0 4px 6px -2px rgba(0, 0, 0, 0.05),
-      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+      0 20px 40px rgba(0, 0, 0, 0.4),
+      0 8px 16px rgba(0, 0, 0, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.15),
+      inset 0 -1px 0 rgba(255, 255, 255, 0.08);
   }
 
-  /* Enhanced album covers */
+  .glass-card:hover::before {
+    left: 100%;
+  }
+
+  /* Modern enhanced album covers */
   .album-cover {
-    @apply relative overflow-hidden rounded-2xl shadow-2xl transition-all duration-500 hover:scale-105;
+    @apply relative overflow-hidden rounded-3xl transition-all duration-700;
     box-shadow: 
-      0 20px 25px -5px rgba(0, 0, 0, 0.3),
-      0 10px 10px -5px rgba(0, 0, 0, 0.2);
+      0 25px 50px rgba(0, 0, 0, 0.4),
+      0 10px 20px rgba(0, 0, 0, 0.3);
+    perspective: 1000px;
   }
 
   .album-cover:hover {
+    transform: translateY(-8px) rotateX(5deg);
     box-shadow: 
-      0 25px 50px -12px rgba(0, 0, 0, 0.5),
-      0 0 30px rgba(34, 197, 94, 0.2);
+      0 35px 70px rgba(0, 0, 0, 0.6),
+      0 0 40px rgba(34, 197, 94, 0.3),
+      0 0 80px rgba(34, 197, 94, 0.1);
   }
 
   .album-cover img {
-    @apply w-full h-full object-cover;
+    @apply w-full h-full object-cover transition-transform duration-700;
   }
 
-  /* Progress bars */
+  .album-cover:hover img {
+    transform: scale(1.05);
+  }
+
+  /* Enhanced progress bars with modern design */
   .progress-bar {
-    @apply w-full h-1.5 bg-white/20 rounded-full overflow-hidden;
+    @apply w-full h-2 bg-white/10 rounded-full overflow-hidden relative;
+    background: linear-gradient(90deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.15) 50%, rgba(255,255,255,0.05) 100%);
   }
   
   .progress-fill {
-    @apply h-full bg-gradient-to-r from-green-400 to-blue-500 transition-all duration-300 ease-out;
-    box-shadow: 0 0 10px rgba(34, 197, 94, 0.5);
+    @apply h-full rounded-full transition-all duration-300 ease-out relative;
+    background: linear-gradient(90deg, #22c55e 0%, #16a34a 50%, #15803d 100%);
+    box-shadow: 
+      0 0 20px rgba(34, 197, 94, 0.6),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2);
   }
 
-  /* Modern buttons */
+  .progress-fill::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.3) 50%, transparent 70%);
+    animation: shimmer 2s linear infinite;
+  }
+
+  /* Advanced button styles */
   .btn-primary {
-    @apply px-6 py-3 bg-gradient-to-r from-green-400 to-blue-500 text-white font-semibold rounded-full transition-all duration-300 hover:shadow-lg hover:shadow-green-500/25 hover:scale-105;
+    @apply px-8 py-4 font-semibold rounded-2xl transition-all duration-300 relative overflow-hidden;
+    background: linear-gradient(135deg, #22c55e 0%, #16a34a 50%, #15803d 100%);
+    box-shadow: 
+      0 4px 15px rgba(34, 197, 94, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    color: white;
+  }
+
+  .btn-primary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    transition: left 0.6s ease;
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 
+      0 8px 25px rgba(34, 197, 94, 0.6),
+      inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  }
+
+  .btn-primary:hover::before {
+    left: 100%;
   }
 
   .btn-secondary {
-    @apply px-6 py-3 bg-white/10 backdrop-blur-xl border border-white/20 text-white font-semibold rounded-full transition-all duration-300 hover:bg-white/20 hover:scale-105;
+    @apply px-8 py-4 font-semibold rounded-2xl transition-all duration-300 relative overflow-hidden;
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    color: white;
+  }
+
+  .btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(255, 255, 255, 0.1);
   }
 
   .btn-ghost {
-    @apply px-4 py-2 text-gray-400 hover:text-white hover:bg-white/10 rounded-lg transition-all duration-200;
+    @apply px-6 py-3 text-gray-400 hover:text-white hover:bg-white/10 rounded-xl transition-all duration-300;
   }
 
-  /* Enhanced thumbnail patterns */
+  /* Advanced pattern designs */
   .pattern-circuit {
     background-image: 
-      radial-gradient(circle at 25% 25%, rgba(255,255,255,0.15) 2px, transparent 2px),
-      radial-gradient(circle at 75% 75%, rgba(255,255,255,0.1) 1px, transparent 1px),
-      linear-gradient(45deg, transparent 40%, rgba(255,255,255,0.05) 50%, transparent 60%);
-    background-size: 30px 30px, 20px 20px, 100% 100%;
+      radial-gradient(circle at 25% 25%, rgba(34,197,94,0.3) 2px, transparent 2px),
+      radial-gradient(circle at 75% 75%, rgba(59,130,246,0.2) 1px, transparent 1px),
+      linear-gradient(45deg, transparent 40%, rgba(147,51,234,0.1) 50%, transparent 60%);
+    background-size: 40px 40px, 30px 30px, 100% 100%;
   }
 
   .pattern-geometric {
     background-image: 
-      linear-gradient(30deg, rgba(255,255,255,0.08) 12%, transparent 12.5%, transparent 87%, rgba(255,255,255,0.08) 87.5%),
-      linear-gradient(150deg, rgba(255,255,255,0.08) 12%, transparent 12.5%, transparent 87%, rgba(255,255,255,0.08) 87.5%);
-    background-size: 50px 50px, 50px 50px;
-    background-position: 0 0, 25px 25px;
+      linear-gradient(30deg, rgba(34,197,94,0.15) 12%, transparent 12.5%, transparent 87%, rgba(34,197,94,0.15) 87.5%),
+      linear-gradient(150deg, rgba(59,130,246,0.15) 12%, transparent 12.5%, transparent 87%, rgba(59,130,246,0.15) 87.5%);
+    background-size: 60px 60px, 60px 60px;
+    background-position: 0 0, 30px 30px;
   }
 
   .pattern-dots {
     background-image: 
-      radial-gradient(circle at 50% 50%, rgba(255,255,255,0.15) 2px, transparent 2px),
-      radial-gradient(circle at 25% 75%, rgba(255,255,255,0.1) 1px, transparent 1px);
-    background-size: 25px 25px, 35px 35px;
+      radial-gradient(circle at 50% 50%, rgba(34,197,94,0.3) 2px, transparent 2px),
+      radial-gradient(circle at 25% 75%, rgba(147,51,234,0.2) 1px, transparent 1px);
+    background-size: 35px 35px, 45px 45px;
   }
 
   .pattern-lines {
     background-image: 
-      linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px),
-      linear-gradient(0deg, rgba(255,255,255,0.05) 1px, transparent 1px);
-    background-size: 30px 30px;
+      linear-gradient(90deg, rgba(34,197,94,0.2) 1px, transparent 1px),
+      linear-gradient(0deg, rgba(59,130,246,0.1) 1px, transparent 1px);
+    background-size: 40px 40px;
   }
 
   .pattern-grid {
     background-image: 
-      linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px);
-    background-size: 40px 40px;
+      linear-gradient(rgba(34,197,94,0.2) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(34,197,94,0.2) 1px, transparent 1px);
+    background-size: 50px 50px;
   }
 
   .pattern-waves {
     background-image: 
-      radial-gradient(ellipse 200% 100% at 50% 0%, rgba(255,255,255,0.1) 0%, transparent 70%),
-      radial-gradient(ellipse 200% 100% at 50% 100%, rgba(255,255,255,0.05) 0%, transparent 70%);
-    background-size: 60px 60px, 80px 80px;
+      radial-gradient(ellipse 300% 150% at 50% 0%, rgba(34,197,94,0.2) 0%, transparent 70%),
+      radial-gradient(ellipse 300% 150% at 50% 100%, rgba(59,130,246,0.15) 0%, transparent 70%);
+    background-size: 80px 80px, 100px 100px;
   }
 
   .pattern-notes {
     background-image: 
-      radial-gradient(circle at 30% 30%, rgba(255,255,255,0.15) 2px, transparent 2px),
-      radial-gradient(circle at 70% 70%, rgba(255,255,255,0.1) 1px, transparent 1px),
-      radial-gradient(circle at 50% 10%, rgba(255,255,255,0.05) 1px, transparent 1px);
-    background-size: 35px 35px, 45px 45px, 25px 25px;
+      radial-gradient(circle at 30% 30%, rgba(34,197,94,0.3) 2px, transparent 2px),
+      radial-gradient(circle at 70% 70%, rgba(59,130,246,0.2) 1px, transparent 1px),
+      radial-gradient(circle at 50% 10%, rgba(147,51,234,0.15) 1px, transparent 1px);
+    background-size: 45px 45px, 55px 55px, 35px 35px;
   }
 
-  /* Enhanced glow effects */
+  .pattern-mesh {
+    background-image: 
+      radial-gradient(at 40% 20%, rgba(34,197,94,0.3) 0px, transparent 50%),
+      radial-gradient(at 80% 0%, rgba(59,130,246,0.2) 0px, transparent 50%),
+      radial-gradient(at 0% 50%, rgba(147,51,234,0.2) 0px, transparent 50%),
+      radial-gradient(at 80% 50%, rgba(236,72,153,0.2) 0px, transparent 50%),
+      radial-gradient(at 0% 100%, rgba(245,101,101,0.2) 0px, transparent 50%),
+      radial-gradient(at 80% 100%, rgba(251,191,36,0.2) 0px, transparent 50%),
+      radial-gradient(at 0% 0%, rgba(129,140,248,0.2) 0px, transparent 50%);
+  }
+
+  /* Enhanced glow effects with modern gradients */
   .glow-green {
-    filter: drop-shadow(0 0 12px rgba(34, 197, 94, 0.6));
+    filter: drop-shadow(0 0 20px rgba(34, 197, 94, 0.8));
   }
 
   .glow-blue {
-    filter: drop-shadow(0 0 12px rgba(59, 130, 246, 0.6));
+    filter: drop-shadow(0 0 20px rgba(59, 130, 246, 0.8));
   }
 
   .glow-purple {
-    filter: drop-shadow(0 0 12px rgba(147, 51, 234, 0.6));
+    filter: drop-shadow(0 0 20px rgba(147, 51, 234, 0.8));
   }
 
   .glow-cyan {
-    filter: drop-shadow(0 0 12px rgba(34, 211, 238, 0.6));
+    filter: drop-shadow(0 0 20px rgba(34, 211, 238, 0.8));
   }
 
-  .glow-yellow {
-    filter: drop-shadow(0 0 12px rgba(234, 179, 8, 0.6));
+  .glow-pink {
+    filter: drop-shadow(0 0 20px rgba(236, 72, 153, 0.8));
   }
 
   .glow-orange {
-    filter: drop-shadow(0 0 12px rgba(249, 115, 22, 0.6));
+    filter: drop-shadow(0 0 20px rgba(249, 115, 22, 0.8));
+  }
+
+  .glow-yellow {
+    filter: drop-shadow(0 0 20px rgba(234, 179, 8, 0.8));
   }
 
   .glow-teal {
-    filter: drop-shadow(0 0 12px rgba(20, 184, 166, 0.6));
+    filter: drop-shadow(0 0 20px rgba(20, 184, 166, 0.8));
   }
 
-  /* Modern Spotify player styles */
+  /* Modern Spotify player with enhanced design */
   .spotify-player {
-    @apply fixed inset-0 bg-gradient-to-b from-gray-950 to-black z-50 flex flex-col;
-    backdrop-filter: blur(20px);
+    @apply fixed inset-0 z-50 flex flex-col;
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 25%, #000000 50%, #1a1a1a 75%, #0a0a0a 100%);
+    backdrop-filter: blur(30px);
   }
 
   .spotify-album-art {
-    @apply w-80 h-80 rounded-2xl overflow-hidden shadow-2xl;
+    @apply rounded-3xl overflow-hidden relative;
+    width: 320px;
+    height: 320px;
     box-shadow: 
-      0 25px 50px -12px rgba(0, 0, 0, 0.7),
-      0 0 50px rgba(34, 197, 94, 0.2);
+      0 30px 60px rgba(0, 0, 0, 0.8),
+      0 0 60px rgba(34, 197, 94, 0.3);
+    perspective: 1000px;
+  }
+
+  .spotify-album-art:hover {
+    transform: rotateY(5deg) rotateX(5deg);
   }
 
   .spotify-controls {
@@ -226,30 +353,60 @@
   }
 
   .spotify-play-button {
-    @apply w-16 h-16 bg-gradient-to-r from-green-400 to-green-500 rounded-full flex items-center justify-center shadow-2xl hover:scale-110 transition-all duration-300;
+    @apply rounded-full flex items-center justify-center shadow-2xl transition-all duration-300 relative overflow-hidden;
+    width: 72px;
+    height: 72px;
+    background: linear-gradient(135deg, #22c55e 0%, #16a34a 50%, #15803d 100%);
     box-shadow: 
-      0 10px 25px -5px rgba(34, 197, 94, 0.4),
-      0 0 20px rgba(34, 197, 94, 0.3);
+      0 15px 35px rgba(34, 197, 94, 0.5),
+      0 0 30px rgba(34, 197, 94, 0.4),
+      inset 0 2px 0 rgba(255, 255, 255, 0.2);
+  }
+
+  .spotify-play-button:hover {
+    transform: scale(1.05);
+    box-shadow: 
+      0 20px 45px rgba(34, 197, 94, 0.7),
+      0 0 40px rgba(34, 197, 94, 0.6);
   }
 
   .spotify-control-button {
-    @apply w-12 h-12 flex items-center justify-center text-white hover:bg-white/10 rounded-full transition-all duration-200 hover:scale-110;
+    @apply w-14 h-14 flex items-center justify-center text-white rounded-full transition-all duration-300;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .spotify-control-button:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: scale(1.1);
   }
 
   .spotify-progress-bar {
-    @apply w-full h-1.5 bg-white/20 rounded-full overflow-hidden;
+    @apply w-full rounded-full overflow-hidden relative;
+    height: 6px;
+    background: linear-gradient(90deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0.1) 100%);
   }
 
   .spotify-progress-fill {
-    @apply h-full bg-gradient-to-r from-green-400 to-green-500 transition-all duration-100 ease-linear;
-    box-shadow: 0 0 15px rgba(34, 197, 94, 0.6);
+    @apply h-full transition-all duration-200 ease-linear rounded-full;
+    background: linear-gradient(90deg, #22c55e 0%, #16a34a 50%, #15803d 100%);
+    box-shadow: 0 0 20px rgba(34, 197, 94, 0.8);
   }
 
   .spotify-text-button {
-    @apply flex items-center space-x-2 text-white hover:bg-white/10 px-4 py-2 rounded-full transition-all duration-200;
+    @apply flex items-center space-x-3 text-white px-6 py-3 rounded-2xl transition-all duration-300;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
   }
 
-  /* Text utilities */
+  .spotify-text-button:hover {
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+  }
+
+  /* Enhanced text utilities */
   .line-clamp-2 {
     display: -webkit-box;
     -webkit-line-clamp: 2;
@@ -271,86 +428,119 @@
     overflow: hidden;
   }
 
-  /* Scrollbar styling */
+  /* Improved scrollbar styling */
   .custom-scrollbar::-webkit-scrollbar {
-    width: 6px;
+    width: 8px;
   }
 
   .custom-scrollbar::-webkit-scrollbar-track {
     background: rgba(255, 255, 255, 0.05);
-    border-radius: 3px;
+    border-radius: 4px;
   }
 
   .custom-scrollbar::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.2);
-    border-radius: 3px;
+    background: linear-gradient(180deg, rgba(34, 197, 94, 0.5), rgba(34, 197, 94, 0.3));
+    border-radius: 4px;
+    transition: background 0.3s ease;
   }
 
   .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-    background: rgba(255, 255, 255, 0.3);
+    background: linear-gradient(180deg, rgba(34, 197, 94, 0.7), rgba(34, 197, 94, 0.5));
   }
 
-  /* Animation utilities */
-  .animate-fade-in {
-    animation: fadeIn 0.6s ease-out;
-  }
-
-  .animate-slide-up {
-    animation: slideUp 0.6s ease-out;
-  }
-
-  .animate-scale-in {
-    animation: scaleIn 0.4s ease-out;
-  }
-
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-  }
-
-  @keyframes slideUp {
-    from {
-      transform: translateY(20px);
-      opacity: 0;
-    }
-    to {
-      transform: translateY(0);
-      opacity: 1;
-    }
-  }
-
-  @keyframes scaleIn {
-    from {
-      transform: scale(0.9);
-      opacity: 0;
-    }
-    to {
-      transform: scale(1);
-      opacity: 1;
-    }
-  }
-
-  /* Focus styles for accessibility */
+  /* Modern focus styles for better accessibility */
   .focus-visible {
     @apply outline-none ring-2 ring-green-500 ring-offset-2 ring-offset-gray-900;
   }
 
-  /* Responsive adjustments */
+  /* Modern loader */
+  .modern-loader {
+    @apply w-8 h-8 border-4 border-white/20 border-t-green-500 rounded-full animate-spin;
+  }
+
+  /* Floating action button */
+  .fab {
+    @apply w-14 h-14 rounded-full flex items-center justify-center shadow-lg transition-all duration-300;
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    box-shadow: 0 8px 25px rgba(34, 197, 94, 0.4);
+  }
+
+  .fab:hover {
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 12px 35px rgba(34, 197, 94, 0.6);
+  }
+
+  /* Modern card hover effects */
+  .interactive-card {
+    @apply transition-all duration-500 cursor-pointer;
+    transform-style: preserve-3d;
+  }
+
+  .interactive-card:hover {
+    transform: translateY(-8px) rotateX(10deg);
+  }
+
+  .interactive-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(34,197,94,0.1), rgba(59,130,246,0.1));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    border-radius: inherit;
+    z-index: -1;
+  }
+
+  .interactive-card:hover::before {
+    opacity: 1;
+  }
+
+  /* Typography enhancements */
+  .text-shadow {
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  }
+
+  .text-shadow-lg {
+    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.6);
+  }
+
+  /* Responsive adjustments with modern design */
   @media (max-width: 768px) {
     .spotify-album-art {
-      @apply w-64 h-64;
+      width: 280px;
+      height: 280px;
     }
     
     .spotify-play-button {
-      @apply w-14 h-14;
+      width: 64px;
+      height: 64px;
     }
     
     .spotify-control-button {
-      @apply w-10 h-10;
+      width: 48px;
+      height: 48px;
+    }
+
+    .glass-card {
+      @apply rounded-2xl;
+    }
+
+    .album-cover {
+      @apply rounded-2xl;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .spotify-album-art {
+      width: 240px;
+      height: 240px;
+    }
+
+    .album-cover {
+      @apply rounded-xl;
     }
 
     .glass-card {
@@ -358,13 +548,18 @@
     }
   }
 
-  @media (max-width: 480px) {
-    .spotify-album-art {
-      @apply w-56 h-56;
-    }
+  /* Dark mode specific enhancements */
+  .dark .glass-card {
+    background: linear-gradient(135deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%);
+  }
 
-    .album-cover {
-      @apply rounded-xl;
-    }
+  .dark .btn-secondary {
+    background: rgba(255, 255, 255, 0.03);
+    border: 2px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .dark .btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.15);
   }
 } 
