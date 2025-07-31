@@ -6,7 +6,11 @@ import { ExternalLink, Star, GitFork, Play, Heart, MoreHorizontal } from 'lucide
 import { repositoriesAtom, playerStateAtom, searchQueryAtom, selectedLanguageAtom } from '@/lib/store'
 import { generateGradient, getProjectIcon, generateThumbnailDesign } from '@/lib/utils'
 
-export function AlbumGrid() {
+interface AlbumGridProps {
+  onPlayProject?: (project: any) => void;
+}
+
+export function AlbumGrid({ onPlayProject }: AlbumGridProps) {
   const [repositories] = useAtom(repositoriesAtom)
   const [searchQuery] = useAtom(searchQueryAtom)
   const [selectedLanguage] = useAtom(selectedLanguageAtom)
@@ -21,6 +25,14 @@ export function AlbumGrid() {
   })
 
   const handleAlbumClick = (repoIndex: number) => {
+    const repo = filteredRepos[repoIndex];
+    
+    // Use the onPlayProject prop if provided (for main page integration)
+    if (onPlayProject) {
+      onPlayProject(repo);
+    }
+    
+    // Also update the player state for the full-screen player
     setPlayerState(prev => ({
       ...prev,
       currentRepoIndex: repoIndex,

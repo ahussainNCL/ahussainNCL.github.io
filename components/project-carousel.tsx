@@ -7,7 +7,11 @@ import { ChevronLeft, ChevronRight, Play, Star, GitFork, ExternalLink, Heart, Sh
 import { repositoriesAtom, centeredProjectIndexAtom, playerStateAtom, searchQueryAtom, selectedLanguageAtom } from '@/lib/store'
 import { getProjectIcon, generateThumbnailDesign } from '@/lib/utils'
 
-export function ProjectCarousel() {
+interface ProjectCarouselProps {
+  onPlayProject?: (project: any) => void;
+}
+
+export function ProjectCarousel({ onPlayProject }: ProjectCarouselProps) {
   const [repositories] = useAtom(repositoriesAtom)
   const [centeredIndex, setCenteredIndex] = useAtom(centeredProjectIndexAtom)
   const [searchQuery] = useAtom(searchQueryAtom)
@@ -59,6 +63,14 @@ export function ProjectCarousel() {
   }, [centeredIndex, filteredRepos.length])
 
   const openPlayer = () => {
+    const repo = filteredRepos[centeredIndex];
+    
+    // Use the onPlayProject prop if provided (for main page integration)
+    if (onPlayProject && repo) {
+      onPlayProject(repo);
+    }
+    
+    // Also update the player state for the full-screen player
     setPlayerState(prev => ({
       ...prev,
       currentRepoIndex: centeredIndex,
