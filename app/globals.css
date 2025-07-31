@@ -1,0 +1,565 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96%;
+    --secondary-foreground: 222.2 84% 4.9%;
+    --muted: 210 40% 96%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96%;
+    --accent-foreground: 222.2 84% 4.9%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 0 0% 7%; /* Spotify dark */
+    --foreground: 0 0% 98%;
+    --card: 0 0% 16%; /* Spotify gray */
+    --card-foreground: 0 0% 98%;
+    --popover: 0 0% 16%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 142 76% 36%; /* Spotify green */
+    --primary-foreground: 0 0% 98%;
+    --secondary: 0 0% 16%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 0 0% 16%;
+    --muted-foreground: 0 0% 70%;
+    --accent: 0 0% 16%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 16%;
+    --input: 0 0% 16%;
+    --ring: 142 76% 36%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Inter', sans-serif;
+  }
+}
+
+@layer components {
+  .album-cover {
+    @apply relative overflow-hidden rounded-lg shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl;
+  }
+  .album-cover img {
+    @apply w-full h-full object-cover;
+  }
+  .progress-bar {
+    @apply w-full h-1 bg-gray-700 rounded-full overflow-hidden;
+  }
+  .progress-fill {
+    @apply h-full bg-spotify-green transition-all duration-100 ease-linear;
+  }
+  .lyrics-container {
+    @apply h-32 overflow-hidden relative;
+  }
+  .lyrics-scroll {
+    @apply transition-transform duration-100 ease-linear;
+  }
+  .bottom-sheet {
+    @apply fixed bottom-0 left-0 right-0 bg-card border-t border-border rounded-t-2xl shadow-2xl;
+  }
+
+  /* Enhanced thumbnail patterns */
+  .pattern-circuit {
+    background-image: 
+      radial-gradient(circle at 25% 25%, rgba(255,255,255,0.1) 1px, transparent 1px),
+      radial-gradient(circle at 75% 75%, rgba(255,255,255,0.1) 1px, transparent 1px),
+      linear-gradient(45deg, transparent 40%, rgba(255,255,255,0.05) 50%, transparent 60%);
+    background-size: 20px 20px, 20px 20px, 100% 100%;
+  }
+
+  .pattern-geometric {
+    background-image: 
+      linear-gradient(30deg, rgba(255,255,255,0.05) 12%, transparent 12.5%, transparent 87%, rgba(255,255,255,0.05) 87.5%, rgba(255,255,255,0.05)),
+      linear-gradient(150deg, rgba(255,255,255,0.05) 12%, transparent 12.5%, transparent 87%, rgba(255,255,255,0.05) 87.5%, rgba(255,255,255,0.05)),
+      linear-gradient(30deg, rgba(255,255,255,0.05) 12%, transparent 12.5%, transparent 87%, rgba(255,255,255,0.05) 87.5%, rgba(255,255,255,0.05)),
+      linear-gradient(150deg, rgba(255,255,255,0.05) 12%, transparent 12.5%, transparent 87%, rgba(255,255,255,0.05) 87.5%, rgba(255,255,255,0.05));
+    background-size: 40px 40px, 40px 40px, 40px 40px, 40px 40px;
+    background-position: 0 0, 0 20px, 20px -20px, -20px 0px;
+  }
+
+  .pattern-dots {
+    background-image: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+    background-size: 15px 15px;
+  }
+
+  .pattern-lines {
+    background-image: 
+      linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px),
+      linear-gradient(0deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
+
+  .pattern-grid {
+    background-image: 
+      linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px);
+    background-size: 25px 25px;
+  }
+
+  .pattern-app-grid {
+    background-image: 
+      radial-gradient(circle at 20% 20%, rgba(255,255,255,0.1) 2px, transparent 2px),
+      radial-gradient(circle at 80% 80%, rgba(255,255,255,0.1) 2px, transparent 2px),
+      radial-gradient(circle at 40% 60%, rgba(255,255,255,0.05) 1px, transparent 1px);
+    background-size: 30px 30px, 30px 30px, 20px 20px;
+  }
+
+  .pattern-bars {
+    background-image: 
+      linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+    background-size: 8px 8px, 16px 16px;
+  }
+
+  .pattern-waves {
+    background-image: 
+      radial-gradient(ellipse at center, rgba(255,255,255,0.1) 0%, transparent 70%);
+    background-size: 50px 50px;
+  }
+
+  .pattern-notes {
+    background-image: 
+      radial-gradient(circle at 30% 30%, rgba(255,255,255,0.1) 1px, transparent 1px),
+      radial-gradient(circle at 70% 70%, rgba(255,255,255,0.1) 1px, transparent 1px);
+    background-size: 25px 25px, 35px 35px;
+  }
+
+  .pattern-rhythm {
+    background-image: 
+      linear-gradient(45deg, rgba(255,255,255,0.05) 25%, transparent 25%),
+      linear-gradient(-45deg, rgba(255,255,255,0.05) 25%, transparent 25%);
+    background-size: 20px 20px;
+  }
+
+  .pattern-melody {
+    background-image: 
+      radial-gradient(circle at 50% 50%, rgba(255,255,255,0.1) 1px, transparent 1px);
+    background-size: 30px 30px;
+  }
+
+  /* Glow effects for icons */
+  .glow-cyan {
+    filter: drop-shadow(0 0 8px rgba(34, 211, 238, 0.6));
+  }
+
+  .glow-yellow {
+    filter: drop-shadow(0 0 8px rgba(234, 179, 8, 0.6));
+  }
+
+  .glow-green {
+    filter: drop-shadow(0 0 8px rgba(34, 197, 94, 0.6));
+  }
+
+  .glow-orange {
+    filter: drop-shadow(0 0 8px rgba(249, 115, 22, 0.6));
+  }
+
+  .glow-blue {
+    filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.6));
+  }
+
+  .glow-purple {
+    filter: drop-shadow(0 0 8px rgba(147, 51, 234, 0.6));
+  }
+
+  .glow-teal {
+    filter: drop-shadow(0 0 8px rgba(20, 184, 166, 0.6));
+  }
+
+  /* Enhanced thumbnail container */
+  .enhanced-thumbnail {
+    @apply relative overflow-hidden rounded-lg shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl;
+    background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
+  }
+
+  .enhanced-thumbnail::before {
+    content: '';
+    @apply absolute inset-0 opacity-20;
+    background: var(--pattern);
+  }
+
+  .enhanced-thumbnail::after {
+    content: '';
+    @apply absolute inset-0;
+    background: linear-gradient(135deg, transparent 0%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.2) 100%);
+  }
+
+  /* Carousel specific styles */
+  .carousel-container {
+    @apply relative w-full max-w-4xl mx-auto px-4;
+    touch-action: pan-y pinch-zoom;
+  }
+
+  .carousel-card {
+    @apply bg-card rounded-2xl p-8 shadow-2xl border border-border;
+    touch-action: pan-x;
+  }
+
+  .carousel-nav-button {
+    @apply absolute top-1/2 transform -translate-y-1/2 z-10 w-12 h-12 bg-black/20 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-black/40 transition-colors disabled:opacity-50 disabled:cursor-not-allowed;
+    touch-action: manipulation;
+  }
+
+  /* Mobile optimizations */
+  @media (max-width: 768px) {
+    .carousel-card {
+      @apply p-6;
+    }
+    
+    .carousel-nav-button {
+      @apply w-10 h-10;
+    }
+    
+    .carousel-nav-button svg {
+      @apply w-5 h-5;
+    }
+  }
+
+  /* Touch feedback */
+  .touch-feedback {
+    @apply transition-transform duration-75;
+  }
+
+  .touch-feedback:active {
+    @apply scale-95;
+  }
+
+  /* Focus styles for accessibility */
+  .focus-visible {
+    @apply outline-none ring-2 ring-spotify-green ring-offset-2 ring-offset-background;
+  }
+  
+  /* Animation delays */
+  .animation-delay-100 {
+    animation-delay: 100ms;
+  }
+  
+  .animation-delay-200 {
+    animation-delay: 200ms;
+  }
+
+  /* Spotify Now Playing styles */
+  .spotify-player {
+    @apply fixed inset-0 bg-black z-50 flex flex-col;
+    background: linear-gradient(180deg, #000000 0%, #1a1a1a 100%);
+  }
+
+  .spotify-album-art {
+    @apply w-80 h-80 rounded-lg overflow-hidden shadow-2xl;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  }
+
+  .spotify-controls {
+    @apply flex items-center justify-between;
+  }
+
+  .spotify-play-button {
+    @apply w-16 h-16 bg-spotify-green rounded-full flex items-center justify-center shadow-lg hover:scale-105 transition-transform;
+    box-shadow: 0 10px 25px -5px rgba(29, 185, 84, 0.3);
+  }
+
+  .spotify-control-button {
+    @apply w-10 h-10 flex items-center justify-center text-white hover:bg-white/10 rounded-full transition-colors;
+  }
+
+  .spotify-progress-bar {
+    @apply w-full h-1 bg-white/20 rounded-full overflow-hidden;
+  }
+
+  .spotify-progress-fill {
+    @apply h-full bg-spotify-green transition-all duration-100 ease-linear;
+  }
+
+  .spotify-text-button {
+    @apply flex items-center space-x-2 text-white hover:bg-white/10 px-4 py-2 rounded-full transition-colors;
+  }
+
+  /* Mobile responsive adjustments for Spotify player */
+  @media (max-width: 768px) {
+    .spotify-album-art {
+      @apply w-64 h-64;
+    }
+    
+    .spotify-play-button {
+      @apply w-14 h-14;
+    }
+    
+    .spotify-control-button {
+      @apply w-8 h-8;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .spotify-album-art {
+      @apply w-56 h-56;
+    }
+  }
+
+  /* PortoHoco Dashboard styles */
+  .portohoco-dashboard {
+    @apply min-h-screen bg-gray-900 p-6;
+    background: linear-gradient(135deg, #111827 0%, #1f2937 100%);
+  }
+
+  .app-grid {
+    @apply grid grid-cols-3 gap-4;
+  }
+
+  .app-tile {
+    @apply rounded-lg p-4 cursor-pointer transition-all duration-300;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  }
+
+  .app-tile:hover {
+    @apply scale-105;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  }
+
+  .app-icon {
+    @apply flex items-center justify-center h-12 mb-2;
+  }
+
+  .now-playing-panel {
+    @apply fixed bottom-6 right-6 w-80 rounded-lg p-4 shadow-2xl;
+    background: linear-gradient(145deg, rgba(30, 30, 63, 0.95), rgba(45, 45, 79, 0.95));
+    box-shadow: 
+      0 25px 50px -12px rgba(255, 107, 107, 0.3),
+      0 8px 24px rgba(0, 0, 0, 0.4),
+      0 0 0 1px rgba(255, 107, 107, 0.2);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 107, 107, 0.2);
+  }
+
+  .control-button {
+    @apply w-8 h-8 bg-gray-700 rounded-full flex items-center justify-center hover:bg-gray-600 transition-colors;
+  }
+
+  .progress-bar-portohoco {
+    @apply w-full h-1 bg-gray-700 rounded-full overflow-hidden;
+  }
+
+  .progress-fill-portohoco {
+    @apply h-full transition-all duration-100 ease-linear;
+    background: linear-gradient(90deg, #ff6b6b, #4ecdc4, #45b7d1);
+  }
+
+  /* Compact Layout Styles */
+  .app-grid-compact {
+    @apply grid grid-cols-3 gap-3 max-w-2xl mx-auto;
+  }
+
+  .app-tile-compact {
+    @apply rounded-xl p-3 cursor-pointer transition-all duration-300 aspect-square flex flex-col items-center justify-center;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    min-height: 100px;
+  }
+
+  .app-tile-compact:hover {
+    @apply scale-105;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  }
+
+  .app-icon-compact {
+    @apply flex items-center justify-center h-8 mb-2;
+  }
+
+  .now-playing-panel-compact {
+    @apply fixed bottom-6 right-6 w-72 bg-gray-800 rounded-lg p-4 shadow-2xl;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    backdrop-filter: blur(10px);
+  }
+
+  .control-button-compact {
+    @apply w-6 h-6 bg-gray-700 rounded-full flex items-center justify-center hover:bg-gray-600 transition-colors;
+  }
+
+  /* Enhanced Layout Styles - Matching Reference Image */
+  .app-grid-enhanced {
+    @apply grid grid-cols-3 gap-4 max-w-3xl mx-auto;
+  }
+
+  .app-tile-enhanced {
+    @apply rounded-lg p-4 cursor-pointer transition-all duration-300 aspect-square flex flex-col items-center justify-center;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    min-height: 120px;
+    background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+  }
+
+  .app-tile-enhanced:hover {
+    @apply scale-105;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  }
+
+  .app-tile-enhanced.ring-2 {
+    box-shadow: 0 0 0 2px #4ade80, 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  }
+
+  .app-icon-enhanced {
+    @apply flex items-center justify-center h-10 mb-2;
+  }
+
+  .now-playing-panel-enhanced {
+    @apply fixed bottom-6 right-6 w-96 rounded-2xl p-6 shadow-2xl z-50;
+    background: rgba(15, 15, 15, 0.85);
+    backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 
+      0 25px 50px -12px rgba(0, 0, 0, 0.5),
+      0 0 50px rgba(142, 76, 36, 0.15),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+    min-height: 280px;
+    animation: slideUp 0.6s ease-out;
+  }
+  
+  @keyframes slideUp {
+    from {
+      transform: translateY(100px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  .control-button-enhanced {
+    @apply w-8 h-8 rounded-full flex items-center justify-center transition-all duration-200;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  .control-button-enhanced:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+    transform: scale(1.1);
+  }
+
+  .progress-bar-enhanced {
+    @apply w-full h-1 rounded-full overflow-hidden;
+    background: rgba(255, 255, 255, 0.1);
+  }
+
+  .progress-fill-enhanced {
+    @apply h-full transition-all duration-100 ease-linear;
+    background: linear-gradient(90deg, #1db954, #1ed760);
+    box-shadow: 0 0 10px rgba(29, 185, 84, 0.5);
+  }
+
+  /* Text utilities */
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .line-clamp-4 {
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* Now Playing Panel Responsive */
+  @media (max-width: 1024px) {
+    .now-playing-panel-enhanced {
+      @apply bottom-4 right-4 left-4 w-auto;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .now-playing-panel-enhanced {
+      @apply bottom-0 right-0 left-0 rounded-t-2xl rounded-b-none p-4;
+      max-width: 100%;
+      min-height: 240px;
+    }
+  }
+  
+  /* Mobile responsive adjustments for PortoHoco */
+  @media (max-width: 768px) {
+    .app-grid {
+      @apply grid-cols-2 gap-3;
+    }
+    
+    .app-grid-compact {
+      @apply grid-cols-2 gap-2 max-w-sm;
+    }
+    
+    .app-grid-enhanced {
+      @apply grid-cols-2 gap-3 max-w-sm;
+    }
+    
+    .now-playing-panel {
+      @apply w-72 bottom-4 right-4;
+    }
+    
+    .now-playing-panel-compact {
+      @apply w-64 bottom-4 right-4;
+    }
+    
+    .now-playing-panel-enhanced {
+      @apply w-80 bottom-4 right-4 p-4;
+      min-height: 240px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .app-grid {
+      @apply grid-cols-2 gap-2;
+    }
+    
+    .app-grid-compact {
+      @apply grid-cols-2 gap-2 max-w-xs;
+    }
+    
+    .app-grid-enhanced {
+      @apply grid-cols-2 gap-2 max-w-xs;
+    }
+    
+    .now-playing-panel {
+      @apply w-full bottom-0 right-0 rounded-t-lg rounded-b-none;
+    }
+    
+    .now-playing-panel-compact {
+      @apply w-full bottom-0 right-0 rounded-t-lg rounded-b-none;
+    }
+    
+    .now-playing-panel-enhanced {
+      @apply w-full bottom-0 right-0 rounded-t-lg rounded-b-none;
+    }
+  }
+} 
