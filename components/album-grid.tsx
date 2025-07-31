@@ -2,7 +2,7 @@
 
 import { useAtom } from 'jotai'
 import { motion } from 'framer-motion'
-import { ExternalLink, Star, GitFork } from 'lucide-react'
+import { ExternalLink, Star, GitFork, Play, Heart, MoreHorizontal } from 'lucide-react'
 import { repositoriesAtom, playerStateAtom, searchQueryAtom, selectedLanguageAtom } from '@/lib/store'
 import { generateGradient, getProjectIcon, generateThumbnailDesign } from '@/lib/utils'
 
@@ -32,18 +32,37 @@ export function AlbumGrid() {
 
   if (filteredRepos.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center py-20 text-center">
-        <div className="w-16 h-16 bg-gray-700 rounded-full flex items-center justify-center mb-4">
-          <span className="text-2xl">🎵</span>
-        </div>
-        <h3 className="text-xl font-semibold text-foreground mb-2">No tracks found</h3>
-        <p className="text-muted-foreground">Try adjusting your search or filter criteria</p>
+      <div className="flex flex-col items-center justify-center py-32 text-center">
+        <motion.div 
+          className="w-24 h-24 bg-gradient-to-br from-gray-700 to-gray-800 rounded-2xl flex items-center justify-center mb-6"
+          initial={{ scale: 0 }}
+          animate={{ scale: 1 }}
+          transition={{ type: "spring", duration: 0.6 }}
+        >
+          <span className="text-4xl">🎵</span>
+        </motion.div>
+        <motion.h3 
+          className="text-2xl font-semibold text-white mb-3"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+        >
+          No tracks found
+        </motion.h3>
+        <motion.p 
+          className="text-gray-400 max-w-md"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+        >
+          Try adjusting your search or filter criteria to discover more projects
+        </motion.p>
       </div>
     )
   }
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
       {filteredRepos.map((repo, index) => {
         const projectIcon = getProjectIcon(repo.name, repo.description)
         const thumbnailDesign = generateThumbnailDesign(repo.name, repo.description)
@@ -53,89 +72,193 @@ export function AlbumGrid() {
             key={repo.id}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: index * 0.1 }}
+            transition={{ delay: index * 0.05, duration: 0.6 }}
             className="group cursor-pointer"
             onClick={() => handleAlbumClick(index)}
           >
-            <div className="album-cover aspect-square mb-4 relative overflow-hidden">
-              {repo.socialPreview ? (
-                <img
-                  src={repo.socialPreview}
-                  alt={repo.name}
-                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
-                  onError={(e) => {
-                    const target = e.target as HTMLImageElement
-                    target.style.display = 'none'
-                    target.nextElementSibling?.classList.remove('hidden')
-                  }}
-                />
-              ) : null}
-              
-              {/* Enhanced fallback gradient cover with patterns and glow effects */}
-              <div 
-                className={`absolute inset-0 bg-gradient-to-br ${thumbnailDesign.gradient} pattern-${thumbnailDesign.pattern} ${repo.socialPreview ? 'hidden' : ''}`}
-                style={{
-                  '--gradient-start': 'var(--tw-gradient-from)',
-                  '--gradient-end': 'var(--tw-gradient-to)',
-                } as React.CSSProperties}
-              >
-                {/* Pattern overlay */}
-                <div className="absolute inset-0 opacity-20"></div>
+            {/* Modern Card Container */}
+            <div className="glass-card p-4 hover:scale-[1.02] transition-all duration-500">
+              {/* Album Cover with Enhanced Design */}
+              <div className="album-cover aspect-square mb-4 relative overflow-hidden">
+                {repo.socialPreview ? (
+                  <img
+                    src={repo.socialPreview}
+                    alt={repo.name}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement
+                      target.style.display = 'none'
+                      target.nextElementSibling?.classList.remove('hidden')
+                    }}
+                  />
+                ) : null}
                 
-                {/* Main icon with glow effect */}
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <div className={`text-white text-5xl font-bold ${thumbnailDesign.iconStyle} transition-all duration-300 group-hover:scale-110`}>
-                    {projectIcon.icon}
+                {/* Enhanced fallback with modern patterns */}
+                <div 
+                  className={`absolute inset-0 bg-gradient-to-br ${thumbnailDesign.gradient} pattern-${thumbnailDesign.pattern} ${repo.socialPreview ? 'hidden' : ''}`}
+                >
+                  {/* Animated background overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-black/20 via-transparent to-black/40"></div>
+                  
+                  {/* Main icon with enhanced glow */}
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <motion.div 
+                      className={`text-white text-6xl font-bold ${thumbnailDesign.iconStyle} transition-all duration-500 group-hover:scale-110`}
+                      whileHover={{ rotate: 5 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      {projectIcon.icon}
+                    </motion.div>
+                  </div>
+                  
+                  {/* Floating accent elements */}
+                  <motion.div 
+                    className={`absolute top-6 right-6 w-3 h-3 ${thumbnailDesign.accentColor} rounded-full opacity-80`}
+                    animate={{ 
+                      scale: [1, 1.2, 1],
+                      opacity: [0.8, 1, 0.8]
+                    }}
+                    transition={{ 
+                      duration: 2,
+                      repeat: Infinity,
+                      ease: "easeInOut"
+                    }}
+                  />
+                  <motion.div 
+                    className={`absolute bottom-6 left-6 w-2 h-2 ${thumbnailDesign.accentColor} rounded-full opacity-60`}
+                    animate={{ 
+                      scale: [1, 1.3, 1],
+                      opacity: [0.6, 0.9, 0.6]
+                    }}
+                    transition={{ 
+                      duration: 2.5,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                      delay: 0.5
+                    }}
+                  />
+                  
+                  {/* Modern project type badge */}
+                  <div className="absolute bottom-3 left-3 bg-black/70 backdrop-blur-md px-3 py-1.5 rounded-lg border border-white/10">
+                    <span className="text-xs text-white font-medium">{projectIcon.label}</span>
+                  </div>
+                  
+                  {/* Geometric accent ring */}
+                  <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+                    <motion.div 
+                      className="w-20 h-20 border border-white/20 rounded-full"
+                      animate={{ rotate: 360 }}
+                      transition={{ 
+                        duration: 20,
+                        repeat: Infinity,
+                        ease: "linear"
+                      }}
+                    />
                   </div>
                 </div>
-                
-                {/* Accent elements */}
-                <div className={`absolute top-4 right-4 w-3 h-3 ${thumbnailDesign.accentColor} rounded-full opacity-80`}></div>
-                <div className={`absolute bottom-4 left-4 w-2 h-2 ${thumbnailDesign.accentColor} rounded-full opacity-60`}></div>
-                
-                {/* Project type label */}
-                <div className="absolute bottom-2 left-2 bg-black/70 backdrop-blur-sm px-2 py-1 rounded text-xs text-white font-medium">
-                  {projectIcon.label}
+
+                {/* Enhanced play button overlay */}
+                <motion.div 
+                  className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-center justify-center backdrop-blur-sm"
+                  initial={{ opacity: 0 }}
+                  whileHover={{ opacity: 1 }}
+                >
+                  <motion.div 
+                    className="w-16 h-16 bg-gradient-to-r from-green-400 to-green-500 rounded-full flex items-center justify-center shadow-2xl"
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.95 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 15 }}
+                  >
+                    <Play className="w-7 h-7 text-black ml-1" fill="currentColor" />
+                  </motion.div>
+                </motion.div>
+
+                {/* Enhanced stats overlay */}
+                <div className="absolute top-3 right-3 flex items-center space-x-2 opacity-0 group-hover:opacity-100 transition-all duration-300">
+                  <motion.div 
+                    className="flex items-center space-x-1 bg-black/70 backdrop-blur-md px-2 py-1 rounded-lg border border-white/10"
+                    whileHover={{ scale: 1.05 }}
+                  >
+                    <Star className="w-3 h-3 text-yellow-400" />
+                    <span className="text-xs text-white font-medium">{repo.stargazers_count}</span>
+                  </motion.div>
+                  <motion.div 
+                    className="flex items-center space-x-1 bg-black/70 backdrop-blur-md px-2 py-1 rounded-lg border border-white/10"
+                    whileHover={{ scale: 1.05 }}
+                  >
+                    <GitFork className="w-3 h-3 text-blue-400" />
+                    <span className="text-xs text-white font-medium">{repo.forks_count}</span>
+                  </motion.div>
                 </div>
-                
-                {/* Subtle geometric accent */}
-                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-16 h-16 border border-white/10 rounded-full opacity-30"></div>
+
+                {/* Corner action buttons */}
+                <div className="absolute bottom-3 right-3 flex items-center space-x-2 opacity-0 group-hover:opacity-100 transition-all duration-300">
+                  <motion.button
+                    className="w-8 h-8 bg-black/70 backdrop-blur-md rounded-full flex items-center justify-center border border-white/10 hover:bg-white/20 transition-colors"
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      window.open(repo.html_url, '_blank')
+                    }}
+                  >
+                    <ExternalLink className="w-3.5 h-3.5 text-white" />
+                  </motion.button>
+                  <motion.button
+                    className="w-8 h-8 bg-black/70 backdrop-blur-md rounded-full flex items-center justify-center border border-white/10 hover:bg-red-500/20 transition-colors"
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <Heart className="w-3.5 h-3.5 text-white" />
+                  </motion.button>
+                </div>
               </div>
 
-              {/* Play button overlay */}
-              <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                <div className="w-12 h-12 bg-spotify-green rounded-full flex items-center justify-center shadow-lg">
-                  <svg className="w-6 h-6 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M8 5v14l11-7z"/>
-                  </svg>
+              {/* Enhanced project info */}
+              <div className="space-y-3">
+                <div>
+                  <motion.h3 
+                    className="font-semibold text-white group-hover:text-green-400 transition-colors duration-300 truncate"
+                    whileHover={{ x: 2 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    {repo.name.replace(/-/g, ' ')}
+                  </motion.h3>
+                  <p className="text-sm text-gray-400 line-clamp-2 mt-1">
+                    {repo.description || "No description available"}
+                  </p>
                 </div>
-              </div>
-
-              {/* Stats overlay */}
-              <div className="absolute top-3 right-3 flex items-center space-x-2 text-white text-sm">
-                <div className="flex items-center space-x-1 bg-black/60 backdrop-blur-sm px-2 py-1 rounded">
-                  <Star className="w-3 h-3" />
-                  <span>{repo.stargazers_count}</span>
+                
+                {/* Enhanced bottom section */}
+                <div className="flex items-center justify-between">
+                  <motion.span 
+                    className="text-xs bg-gradient-to-r from-gray-700 to-gray-600 text-gray-300 px-3 py-1 rounded-full border border-gray-600/50"
+                    whileHover={{ scale: 1.05 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    {repo.language || 'Unknown'}
+                  </motion.span>
+                  
+                  <div className="flex items-center space-x-3 text-gray-400">
+                    <motion.div 
+                      className="flex items-center space-x-1"
+                      whileHover={{ scale: 1.05, color: '#fbbf24' }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <Star className="w-3 h-3" />
+                      <span className="text-xs font-medium">{repo.stargazers_count}</span>
+                    </motion.div>
+                    <motion.div 
+                      className="flex items-center space-x-1"
+                      whileHover={{ scale: 1.05, color: '#60a5fa' }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      <GitFork className="w-3 h-3" />
+                      <span className="text-xs font-medium">{repo.forks_count}</span>
+                    </motion.div>
+                  </div>
                 </div>
-                <div className="flex items-center space-x-1 bg-black/60 backdrop-blur-sm px-2 py-1 rounded">
-                  <GitFork className="w-3 h-3" />
-                  <span>{repo.forks_count}</span>
-                </div>
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              <h3 className="font-semibold text-foreground group-hover:text-spotify-green transition-colors">
-                {repo.name}
-              </h3>
-              <p className="text-sm text-muted-foreground line-clamp-2">
-                {repo.description}
-              </p>
-              <div className="flex items-center justify-between">
-                <span className="text-xs text-muted-foreground bg-gray-800 px-2 py-1 rounded">
-                  {repo.language}
-                </span>
-                <ExternalLink className="w-4 h-4 text-muted-foreground opacity-0 group-hover:opacity-100 transition-opacity" />
               </div>
             </div>
           </motion.div>
